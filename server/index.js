@@ -16,8 +16,19 @@ app.post('/gift', (req, res) => {
   // grab the parameters from the front-end here
   const body = req.body;
 
-  // TODO: prove that a name is in the list 
+  const input = body.inputName;
+
+  // TODO: prove that a name is in the list
+
+  // create the merkle tree for the whole nice list
+  const merkleTree = new MerkleTree(niceList);
+  const root = merkleTree._getRoot();
+  const name = input;
+  const index = niceList.findIndex(n => n === name);
+  const proof = merkleTree.getProof(index);
+
   const isInTheList = false;
+      // verifyProof(proof, name, root); // verify proof against the Merkle Root
   if(isInTheList) {
     res.send("You got a toy robot!");
   }
